@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+
     public static final String DEFAULT_ERROR_VIEW = "error";
 
     @ExceptionHandler(value = Exception.class)
