@@ -19,5 +19,4 @@ public class HelloController {
         throw new MyException("发生错误2！");
     }
 
-
 } 
