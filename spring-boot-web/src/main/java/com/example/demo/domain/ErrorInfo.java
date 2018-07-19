@@ -10,6 +10,7 @@ public class ErrorInfo<T> {
     private String url;
     private T data;
 
+
     public Integer getCode() {
         return code;
     }
