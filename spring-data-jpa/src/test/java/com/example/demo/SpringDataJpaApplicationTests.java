@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -17,6 +18,7 @@ public class SpringDataJpaApplicationTests {
 	private UserRepository userRepository;
 
 	@Test
+	@Transactional    //mysql仅在存储引擎为innodb时该注解生效
 	public void test() throws Exception {
 
 		// 创建10条记录
@@ -27,7 +29,7 @@ public class SpringDataJpaApplicationTests {
 		userRepository.save(new User("EEE", 50));
 		userRepository.save(new User("FFF", 60));
 		userRepository.save(new User("GGG", 70));
-		userRepository.save(new User("HHH", 80));
+		userRepository.save(new User("HHHHHHHH", 80));
 		userRepository.save(new User("III", 90));
 		userRepository.save(new User("JJJ", 100));
 
@@ -35,10 +37,10 @@ public class SpringDataJpaApplicationTests {
 		Assert.assertEquals(10, userRepository.findAll().size());
 
 		// 测试findByName, 查询姓名为FFF的User
-		Assert.assertEquals(60, userRepository.findByName("FFF").getAge());
+		Assert.assertEquals(60, userRepository.findByName("FFF").getAge().intValue());
 
 		// 测试findUser, 查询姓名为FFF的User
-		Assert.assertEquals(60, userRepository.findUser("FFF").getAge());
+		Assert.assertEquals(60, userRepository.findUser("FFF").getAge().intValue());
 
 		// 测试findByNameAndAge, 查询姓名为FFF并且年龄为60的User
 		Assert.assertEquals("FFF", userRepository.findByNameAndAge("FFF", 60).getName());
