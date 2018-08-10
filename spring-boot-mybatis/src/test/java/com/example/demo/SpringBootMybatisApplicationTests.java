@@ -23,6 +23,6 @@ public class SpringBootMybatisApplicationTests {
 		userMapper.insert("AAAA", 20);
 		User u = userMapper.findByName("AAAA");
 		Assert.assertEquals(20, u.getAge().intValue());
-	}
+    }
 
 }

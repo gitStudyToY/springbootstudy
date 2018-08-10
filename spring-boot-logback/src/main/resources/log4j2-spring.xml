@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" monitorInterval="30">
+
+    <Properties>
+        <Property name="logPath">/applog/mng/baseapp</Property>
+        <Property name="logName">crm-default</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8"
+                           pattern="%d{DEFAULT} [%-5level] [%logger{1}] - %m%n%rEx" />
+        </Console>
+
+        <Routing name="Routing">
+            <Routes pattern="$${ctx:logName}">
+                <Route>
+                    <RollingFile name="Rolling-${ctx:logName}" fileName="${logPath}/${ctx:logName}.log"
+                                 filePattern="${logPath}/$${date:yyyy-MM-dd}/${ctx:logName}-%d{yyyy-MM-dd}-%i.log.gz">
+                        <PatternLayout charset="UTF-8">
+                            <pattern>%d{DEFAULT} [%-5level] [%logger{1}] - %m%n%rEx</pattern>
+                        </PatternLayout>
+                        <Policies>
+                            <TimeBasedTriggeringPolicy modulate="true" interval="24" />
+                            <SizeBasedTriggeringPolicy size="250 MB" />
+                        </Policies>
+                        <DefaultRolloverStrategy fileIndex="min" max="20"/>
+                    </RollingFile>
+                </Route>
+            </Routes>
+        </Routing>
+        <Async name="Async">
+            <AppenderRef ref="Routing" />
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="Routing" />
+        </Root>
+    </Loggers>
+</Configuration>
