@@ -18,7 +18,7 @@ public class SpringBootLogbackApplication {
 		log.info("=========================服务启动 start ===============");
 	}
 
-	public static void main(String[] args){
+	public static void main (String[] args) throws Exception{
 
 //		SpringApplication springApplication = new SpringApplication();
 //
@@ -29,14 +29,6 @@ public class SpringBootLogbackApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(SpringBootLogbackApplication.class, args);
 		start();
 
-		try {
-			int i = 1/0;
-		} catch (Exception e) {
-			log.info(ExceptionUtils.getFullStackTrace(e));
 
-			context.close();
-
-
-		}
 	}
 }

@@ -7,13 +7,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringBootLogbackApplicationTests {
+public class SpringBootHelloworldApplicationTests {
 
 	@Test
 	public void contextLoads() {
-
-
-
 	}
 
 }
