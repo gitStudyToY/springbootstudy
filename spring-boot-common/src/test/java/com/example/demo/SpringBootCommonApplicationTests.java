@@ -1,6 +1,13 @@
 package com.example.demo;
 
 import com.example.demo.controller.DtoController;
+import com.example.demo.dto.BodyResp;
+import com.example.demo.dto.Header;
+import com.example.demo.dto.RootResp;
+import com.example.demo.dto.param.DtoOut;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,47 +24,31 @@ public class SpringBootCommonApplicationTests {
 	private DtoController dtoController;
 
 	@Test
-	public void contextLoads() {
+	public void contextLoads() throws JsonProcessingException {
 
-		String in = "{\n" +
-				"    \"ROOT\": {\n" +
-				"        \"BODY\": {\n" +
-				"            \"REQUEST_INFO\": {\n" +
-				"                \"BUSI_INFO_LIST\": {\n" +
-				"                    \"BUSI_INFO\": {\n" +
-				"                        \"CUST_ID\": \"\",\n" +
-				"                        \"ECENTPERMIT\": \"\",\n" +
-				"                        \"ECMANNAME\": \"\",\n" +
-				"                        \"ECTYPE\": \"\",\n" +
-				"                        \"EC_ID\": \"4797000409\",\n" +
-				"                        \"EC_STATUS\": \"\",\n" +
-				"                        \"PAGE_NUM\": \"1\",\n" +
-				"                        \"TOTAL_COUNT\": \"0\"\n" +
-				"                    }\n" +
-				"                }\n" +
-				"            }\n" +
-				"        },\n" +
-				"        \"HEADER\": {\n" +
-				"            \"CHANNEL_ID\": \"11\",\n" +
-				"            \"CONTACT_ID\": \"\",\n" +
-				"            \"DB_ID\": \"B1\",\n" +
-				"            \"ENV_ID\": \"\",\n" +
-				"            \"KEEP_LIVE\": \"10.208.201.160\",\n" +
-				"            \"PARENT_CALL_ID\": \"F1F9722B2D47F873107FD9EC194C0A0B\",\n" +
-				"            \"POOL_ID\": \"2\",\n" +
-				"            \"ROUTING\": {\n" +
-				"                \"APP_CODE\": \"custm\",\n" +
-				"                \"BALANCE\": \"w\",\n" +
-				"                \"ROUTE_KEY\": \"15\",\n" +
-				"                \"ROUTE_VALUE\": \"16\"\n" +
-				"            },\n" +
-				"            \"SUB_TRACE_ID\": \"\",\n" +
-				"            \"TRACE_ID\": \"11*20160623094600*3895*baNP01*497168\"\n" +
-				"        }\n" +
-				"    }\n" +
-				"}";
+		RootResp<DtoOut> caseb = new RootResp<DtoOut>();
 
 
+
+		ObjectMapper mapper = new ObjectMapper();
+
+	//	mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
+
+		Header header = new Header();
+		header.setChannel_Id("464655");
+		header.setKeepLive("465656");
+
+		caseb.setHeader(header);
+
+		BodyResp<DtoOut> bodyResp = new BodyResp<>();
+		bodyResp.setReturnCode("0");
+		bodyResp.setReturnMsg("OK");
+
+		caseb.setBody(bodyResp);
+
+		String jsonStr = mapper.writeValueAsString(caseb);
+
+		System.out.println("JSON:" + jsonStr);
 
 	}
 

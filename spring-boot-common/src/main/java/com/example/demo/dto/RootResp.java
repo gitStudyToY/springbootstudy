@@ -4,16 +4,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-@JsonRootName("ROOT")
-public class DTO<T> implements Serializable{
+@JsonRootName(value = "ROOT")
+public class RootResp<T> implements Serializable {
 
-    private static final Logger logger = LoggerFactory.getLogger(DTO.class);
+    private final static Logger logger = LoggerFactory.getLogger(DTO.class);
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5819991946390023007L;
+
+//    @JsonProperty("ROOT")
+//    private DTOResp<T> dto;
+//
+//    public DTOResp<T> getDto() {
+//        return dto;
+//    }
+//
+//    public void setDto(DTOResp<T> dto) {
+//        this.dto = dto;
+//    }
+
     /**
      * 会话控制
      */
@@ -24,7 +43,7 @@ public class DTO<T> implements Serializable{
      * 业务内容
      */
     @JsonProperty(value="BODY")
-    private Body<T> body;
+    private BodyResp<T> body;
 
 
     public Header getHeader() {
@@ -35,16 +54,17 @@ public class DTO<T> implements Serializable{
         this.header = header;
     }
 
-    public Body<T> getBody() {
+    public BodyResp<T> getBody() {
         if (Objects.isNull(body)) {
-            this.body = new Body<T>();
+            this.body = new BodyResp<T>();
         }
         return body;
     }
 
-    public void setBody(Body<T> body) {
+    public void setBody(BodyResp<T> body) {
         this.body = body;
     }
+
 
     @Override
     public String toString() {
@@ -53,6 +73,7 @@ public class DTO<T> implements Serializable{
 
     public String toJson(ObjectMapper objectMapper) {
         try {
+            objectMapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
             return objectMapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
             logger.error("", e);
@@ -60,4 +81,4 @@ public class DTO<T> implements Serializable{
         return toString();
     }
 
-}
+} 
